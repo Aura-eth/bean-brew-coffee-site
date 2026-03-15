@@ -1,110 +1,151 @@
-"use client";
+"use client"
 
-import { FadeInUp } from '@/components/fade-in-up';
-import { ShineBorder } from '@/components/shine-border';
-import { cn } from '@/lib/utils';
-import { Coffee, Award, Users, ArrowRight, Star } from 'lucide-react';
+import FadeInUp from '@/components/fade-in-up'
+import { cn } from '@/lib/utils'
 
 export default function HomePage() {
   return (
-    <main className="overflow-hidden">
+    <div className="min-h-screen bg-color-bg text-color-text overflow-hidden">
       <style jsx>{`
-        .coffee-bean-pattern {
-          background-image: radial-gradient(circle at 20px 30px, rgba(139, 69, 19, 0.1) 2px, transparent 2px),
-                            radial-gradient(circle at 80px 10px, rgba(139, 69, 19, 0.1) 2px, transparent 2px),
-                            radial-gradient(circle at 40px 70px, rgba(139, 69, 19, 0.1) 2px, transparent 2px);
-          background-size: 100px 80px;
+        .coffee-ring {
+          position: absolute;
+          border: 2px solid var(--color-primary);
+          border-radius: 50%;
+          opacity: 0.1;
         }
-        
-        .menu-card:hover .brewing-detail {
-          opacity: 1;
-          transform: translateY(0);
+        .coffee-ring-1 {
+          width: 120px;
+          height: 120px;
+          top: 20%;
+          left: 10%;
         }
-        
-        .brewing-detail {
-          opacity: 0;
-          transform: translateY(10px);
-          transition: all 0.3s var(--ease-out);
+        .coffee-ring-2 {
+          width: 80px;
+          height: 80px;
+          top: 60%;
+          right: 15%;
         }
-        
-        .parallax-coffee {
-          background-attachment: fixed;
-          background-size: cover;
-          background-position: center;
+        .coffee-ring-3 {
+          width: 100px;
+          height: 100px;
+          bottom: 20%;
+          left: 20%;
+        }
+        .floating-bean {
+          position: absolute;
+          width: 8px;
+          height: 12px;
+          background: var(--color-primary);
+          border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+          opacity: 0.2;
+          animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .bean-1 { top: 30%; left: 5%; animation-delay: 0s; }
+        .bean-2 { top: 70%; right: 8%; animation-delay: 2s; }
+        .bean-3 { top: 50%; left: 85%; animation-delay: 4s; }
+        .parallax-layer {
+          transform: translateZ(0);
+          will-change: transform;
+        }
+        .texture-overlay {
+          background-image: radial-gradient(circle at 30% 60%, var(--color-primary) 1px, transparent 1px),
+                           radial-gradient(circle at 70% 20%, var(--color-secondary) 1px, transparent 1px);
+          background-size: 120px 80px, 150px 90px;
+          opacity: 0.03;
         }
       `}</style>
-      
-      {/* Hero Section - Split Content */}
-      <section id="hero" className="min-h-screen grid grid-cols-1 lg:grid-cols-2 coffee-bean-pattern">
-        <div className="flex items-center px-8 lg:px-16 py-24 bg-gradient-to-br from-amber-50 to-orange-50">
-          <div className="max-w-lg">
-            <FadeInUp delay={0}>
-              <span className="text-sm font-semibold uppercase tracking-widest text-amber-700 mb-4 block">Scottsdale's Premier Coffee Experience</span>
-            </FadeInUp>
-            <FadeInUp delay={100}>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-gray-900" style={{fontFamily: 'var(--font-heading)'}}>
-                Exceptional Coffee, Crafted Daily
-              </h1>
-            </FadeInUp>
-            <FadeInUp delay={200}>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Where Scottsdale discovers the art of specialty coffee, one perfect cup at a time
-              </p>
-            </FadeInUp>
-            <FadeInUp delay={300}>
-              <div className="flex gap-4">
-                <ShineBorder borderRadius={12} duration={3} color={["#f59e0b", "#d97706", "#92400e"]}>
-                  <a href="/menu" className="px-8 py-4 bg-amber-600 text-white rounded-xl font-semibold hover:bg-amber-700 transition-colors duration-300 flex items-center gap-2">
-                    View Menu
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </ShineBorder>
-                <a href="/location" className="px-8 py-4 border-2 border-amber-600 text-amber-700 rounded-xl font-semibold hover:bg-amber-50 transition-colors duration-300">
-                  Visit Us
-                </a>
-              </div>
-            </FadeInUp>
-          </div>
-        </div>
-        <div className="relative min-h-[500px] lg:min-h-full">
+
+      {/* Floating Coffee Beans */}
+      <div className="fixed inset-0 pointer-events-none z-10">
+        <div className="floating-bean bean-1"></div>
+        <div className="floating-bean bean-2"></div>
+        <div className="floating-bean bean-3"></div>
+      </div>
+
+      {/* Hero Section */}
+      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 parallax-layer">
           <img 
-            src="https://source.unsplash.com/800x900/?specialty+coffee+barista+pouring+latte+art+foam" 
-            alt="Expert barista crafting latte art" 
-            className="absolute inset-0 w-full h-full object-cover" 
+            src="https://source.unsplash.com/1920x1080/?artisanal coffee shop interior desert modern Scottsdale Arizona" 
+            alt="" 
+            className="w-full h-full object-cover scale-110" 
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
+        <div className="absolute inset-0 texture-overlay"></div>
+        
+        {/* Coffee Ring Decorations */}
+        <div className="coffee-ring coffee-ring-1"></div>
+        <div className="coffee-ring coffee-ring-2"></div>
+        
+        <div className="relative z-20 text-center max-w-4xl mx-auto px-6">
+          <FadeInUp delay={0}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight leading-tight">
+              Where Desert Meets Coffee Culture
+            </h1>
+          </FadeInUp>
+          <FadeInUp delay={100}>
+            <p className="text-xl md:text-2xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
+              Artisanal coffee roasted locally, inspired by the Arizona desert, served in the heart of Scottsdale
+            </p>
+          </FadeInUp>
+          <FadeInUp delay={200}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="#menu-showcase" 
+                className="px-8 py-4 bg-color-primary text-white font-semibold rounded-full text-lg hover:bg-color-primary/90 transition-all duration-300 hover:scale-105"
+              >
+                Explore Our Menu
+              </a>
+              <a 
+                href="#location" 
+                className="px-8 py-4 border-2 border-white text-white font-semibold rounded-full text-lg hover:bg-white hover:text-black transition-all duration-300"
+              >
+                Visit Us Today
+              </a>
+            </div>
+          </FadeInUp>
         </div>
       </section>
 
-      {/* Atmosphere Section - Full Bleed */}
-      <section 
-        id="atmosphere" 
-        className="relative h-[70vh] flex items-center justify-center parallax-coffee"
-        style={{
-          backgroundImage: 'url(https://source.unsplash.com/1800x1200/?modern+coffee+shop+interior+desert+southwest+arizona)'
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60" />
-        <div className="relative text-center text-white max-w-4xl px-6">
+      {/* Atmosphere Section */}
+      <section id="atmosphere" className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img 
+            src="https://source.unsplash.com/1920x1080/?cozy coffee shop community people working laptops" 
+            alt="" 
+            className="w-full h-full object-cover" 
+            style={{ backgroundAttachment: 'fixed' }}
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-color-primary/60 to-color-secondary/40"></div>
+        <div className="relative text-center text-white max-w-3xl px-6">
           <FadeInUp delay={0}>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{fontFamily: 'var(--font-heading)'}}>
-              More Than Coffee
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 font-var-heading">
+              Desert Sunlight & Coffee Warmth
             </h2>
           </FadeInUp>
           <FadeInUp delay={100}>
-            <p className="text-xl text-white/80 leading-relaxed">
-              A gathering place where community meets craft, and every moment is savored
+            <p className="text-lg md:text-xl text-white/80 leading-relaxed">
+              Step into our sun-drenched space where Arizona's golden light mingles with the rich aromas of freshly roasted beans
             </p>
           </FadeInUp>
         </div>
       </section>
 
       {/* Feature Highlight Section */}
-      <section id="features" className="py-24 px-6 bg-gradient-to-b from-stone-50 to-amber-50">
-        <div className="max-w-6xl mx-auto">
+      <section id="feature-highlight" className="py-24 px-6 bg-color-surface relative">
+        <div className="absolute inset-0 texture-overlay"></div>
+        <div className="coffee-ring coffee-ring-3"></div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <FadeInUp delay={0}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900" style={{fontFamily: 'var(--font-heading)'}}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 font-var-heading text-color-text">
                 The Bean & Brew Difference
               </h2>
             </FadeInUp>
@@ -112,37 +153,43 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <FadeInUp delay={0}>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mx-auto mb-6">
-                  <Coffee className="w-8 h-8 text-white" />
+              <div className="text-center group hover:transform hover:scale-105 transition-all duration-300">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-color-primary to-color-secondary flex items-center justify-center mx-auto mb-6 text-white text-2xl shadow-lg">
+                  ☕
                 </div>
-                <h3 className="text-xl font-semibold mb-4 text-gray-900">Single-Origin Excellence</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Carefully sourced beans from premier coffee regions, roasted to perfection in small batches
+                <h3 className="text-2xl font-semibold mb-4 text-color-text">
+                  Locally Roasted
+                </h3>
+                <p className="text-color-muted text-lg leading-relaxed">
+                  Fresh beans roasted weekly by Arizona artisans
                 </p>
               </div>
             </FadeInUp>
             
             <FadeInUp delay={100}>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mx-auto mb-6">
-                  <Award className="w-8 h-8 text-white" />
+              <div className="text-center group hover:transform hover:scale-105 transition-all duration-300">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-color-secondary to-color-accent flex items-center justify-center mx-auto mb-6 text-white text-2xl shadow-lg">
+                  🌵
                 </div>
-                <h3 className="text-xl font-semibold mb-4 text-gray-900">Master Craftsmanship</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Our expert baristas bring years of experience to every pour, extraction, and artistic creation
+                <h3 className="text-2xl font-semibold mb-4 text-color-text">
+                  Desert-Inspired
+                </h3>
+                <p className="text-color-muted text-lg leading-relaxed">
+                  Seasonal drinks featuring local flavors like prickly pear and mesquite
                 </p>
               </div>
             </FadeInUp>
             
             <FadeInUp delay={200}>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mx-auto mb-6">
-                  <Users className="w-8 h-8 text-white" />
+              <div className="text-center group hover:transform hover:scale-105 transition-all duration-300">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-color-accent to-color-primary flex items-center justify-center mx-auto mb-6 text-white text-2xl shadow-lg">
+                  🤝
                 </div>
-                <h3 className="text-xl font-semibold mb-4 text-gray-900">Community Haven</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  A welcoming space where Scottsdale connects over exceptional coffee and genuine conversation
+                <h3 className="text-2xl font-semibold mb-4 text-color-text">
+                  Community Hub
+                </h3>
+                <p className="text-color-muted text-lg leading-relaxed">
+                  A welcoming space for work, connection, and cultural events
                 </p>
               </div>
             </FadeInUp>
@@ -151,132 +198,127 @@ export default function HomePage() {
       </section>
 
       {/* Menu Showcase Section */}
-      <section id="menu" className="py-24 px-6 bg-white">
+      <section id="menu-showcase" className="py-24 px-6 bg-gradient-to-br from-color-bg to-color-surface">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <FadeInUp delay={0}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900" style={{fontFamily: 'var(--font-heading)'}}>
-                Signature Favorites
-              </h2>
-            </FadeInUp>
-            <FadeInUp delay={100}>
-              <p className="text-xl text-gray-600">
-                Taste what makes us special
-              </p>
-            </FadeInUp>
-          </div>
+          <FadeInUp delay={0}>
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 font-var-heading text-color-text">
+              Signature Favorites
+            </h2>
+          </FadeInUp>
+          <FadeInUp delay={100}>
+            <p className="text-center text-color-muted mb-16 max-w-2xl mx-auto text-lg">
+              Discover our carefully crafted drinks that capture the essence of the desert
+            </p>
+          </FadeInUp>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FadeInUp delay={0}>
-              <div className="menu-card bg-gradient-to-br from-amber-50 to-orange-50 p-8 rounded-2xl border border-amber-100 hover:shadow-xl transition-all duration-500 group">
-                <div className="relative">
-                  <img 
-                    src="https://source.unsplash.com/400x300/?latte+art+coffee+cup" 
-                    alt="Desert Sunrise Latte" 
-                    className="w-full h-48 object-cover rounded-xl mb-6 group-hover:scale-105 transition-transform duration-500" 
-                  />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-semibold text-amber-700">
-                    $5.50
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105">
+                <img 
+                  src="https://source.unsplash.com/400x300/?specialty coffee latte art desert landscape background" 
+                  alt="Desert Sunrise Latte" 
+                  className="w-full h-64 object-cover" 
+                />
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-semibold text-color-text">Desert Sunrise Latte</h3>
+                    <span className="text-xl font-bold text-color-primary">$5.50</span>
                   </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-900">Desert Sunrise Latte</h3>
-                <p className="text-gray-600 mb-4">
-                  Espresso with vanilla and cinnamon, topped with our signature foam art
-                </p>
-                <div className="brewing-detail text-xs text-amber-700 bg-amber-100 px-3 py-2 rounded-lg">
-                  Double shot • Steamed milk • Signature vanilla blend
+                  <p className="text-color-muted leading-relaxed">
+                    Espresso with prickly pear syrup and steamed oat milk
+                  </p>
                 </div>
               </div>
             </FadeInUp>
             
             <FadeInUp delay={100}>
-              <div className="menu-card bg-gradient-to-br from-stone-50 to-gray-100 p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-500 group">
-                <div className="relative">
-                  <img 
-                    src="https://source.unsplash.com/400x300/?cold+brew+coffee+glass" 
-                    alt="Cold Brew Perfection" 
-                    className="w-full h-48 object-cover rounded-xl mb-6 group-hover:scale-105 transition-transform duration-500" 
-                  />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-semibold text-gray-700">
-                    $4.25
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105">
+                <img 
+                  src="https://source.unsplash.com/400x300/?coffee beans roasting warm lighting steam" 
+                  alt="Mesquite Mocha" 
+                  className="w-full h-64 object-cover" 
+                />
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-semibold text-color-text">Mesquite Mocha</h3>
+                    <span className="text-xl font-bold text-color-primary">$5.25</span>
                   </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-900">Cold Brew Perfection</h3>
-                <p className="text-gray-600 mb-4">
-                  12-hour steeped cold brew with notes of chocolate and caramel
-                </p>
-                <div className="brewing-detail text-xs text-gray-700 bg-gray-200 px-3 py-2 rounded-lg">
-                  12-hour steep • Single origin • Served over ice
+                  <p className="text-color-muted leading-relaxed">
+                    Rich chocolate and locally-sourced mesquite powder
+                  </p>
                 </div>
               </div>
             </FadeInUp>
             
             <FadeInUp delay={200}>
-              <div className="menu-card bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl border border-green-100 hover:shadow-xl transition-all duration-500 group">
-                <div className="relative">
-                  <img 
-                    src="https://source.unsplash.com/400x300/?granola+bowl+breakfast+fruit" 
-                    alt="Artisan Breakfast Bowl" 
-                    className="w-full h-48 object-cover rounded-xl mb-6 group-hover:scale-105 transition-transform duration-500" 
-                  />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-semibold text-green-700">
-                    $8.75
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105">
+                <img 
+                  src="https://source.unsplash.com/400x300/?coffee shop exterior Arizona desert cacti sunset" 
+                  alt="Saguaro Cold Brew" 
+                  className="w-full h-64 object-cover" 
+                />
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-semibold text-color-text">Saguaro Cold Brew</h3>
+                    <span className="text-xl font-bold text-color-primary">$4.75</span>
                   </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-900">Artisan Breakfast Bowl</h3>
-                <p className="text-gray-600 mb-4">
-                  House-made granola with seasonal fruits and locally sourced honey
-                </p>
-                <div className="brewing-detail text-xs text-green-700 bg-green-100 px-3 py-2 rounded-lg">
-                  House-made granola • Local honey • Seasonal fruits
+                  <p className="text-color-muted leading-relaxed">
+                    Smooth cold brew with a hint of agave nectar
+                  </p>
                 </div>
               </div>
             </FadeInUp>
           </div>
           
-          <div className="text-center mt-12">
-            <FadeInUp delay={300}>
-              <a href="/menu" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-semibold hover:from-amber-700 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+          <FadeInUp delay={300}>
+            <div className="text-center mt-12">
+              <a 
+                href="/menu" 
+                className="inline-block px-8 py-4 bg-color-primary text-white font-semibold rounded-full text-lg hover:bg-color-primary/90 transition-all duration-300 hover:scale-105"
+              >
                 View Full Menu
-                <ArrowRight className="w-5 h-5" />
               </a>
-            </FadeInUp>
-          </div>
+            </div>
+          </FadeInUp>
         </div>
       </section>
 
       {/* Social Proof Section */}
-      <section id="testimonials" className="py-24 px-6 bg-gradient-to-br from-amber-600 to-orange-700 text-white">
-        <div className="max-w-4xl mx-auto text-center">
+      <section id="social-proof" className="py-24 px-6 relative">
+        <div className="absolute inset-0">
+          <img 
+            src="https://source.unsplash.com/1920x800/?live music coffee house acoustic guitar intimate" 
+            alt="" 
+            className="w-full h-full object-cover" 
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-color-primary/85 to-color-secondary/75"></div>
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <FadeInUp delay={0}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-16" style={{fontFamily: 'var(--font-heading)'}}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white font-var-heading">
               What Our Community Says
             </h2>
           </FadeInUp>
           
           <FadeInUp delay={100}>
-            <div className="relative">
-              <div className="text-6xl text-amber-200 mb-8 opacity-50">&ldquo;</div>
-              <blockquote className="text-2xl md:text-3xl font-light leading-relaxed mb-8 -mt-16">
-                Bean & Brew has become my daily ritual. The quality is unmatched and the atmosphere makes every visit special.
-              </blockquote>
-              
-              <div className="flex items-center justify-center gap-1 mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-amber-200 text-amber-200" />
-                ))}
+            <div className="text-6xl text-white/30 mb-8">&ldquo;</div>
+          </FadeInUp>
+          
+          <FadeInUp delay={200}>
+            <blockquote className="text-2xl md:text-3xl font-light leading-relaxed mb-8 text-white">
+              Bean & Brew isn't just a coffee shop—it's where Scottsdale comes together. The desert-inspired drinks are unlike anything I've tasted, and the atmosphere makes you want to stay all day.
+            </blockquote>
+          </FadeInUp>
+          
+          <FadeInUp delay={300}>
+            <div className="flex items-center justify-center gap-4">
+              <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-white text-2xl">
+                👤
               </div>
-              
-              <div className="flex items-center justify-center gap-4">
-                <img 
-                  src="https://source.unsplash.com/80x80/?professional+woman+portrait" 
-                  alt="Sarah M." 
-                  className="w-16 h-16 rounded-full object-cover border-2 border-white/20" 
-                />
-                <div className="text-left">
-                  <div className="font-semibold text-lg">Sarah M.</div>
-                  <div className="text-amber-200">Scottsdale Resident</div>
-                </div>
+              <div className="text-left text-white">
+                <div className="font-semibold text-lg">Sarah M.</div>
+                <div className="text-sm text-white/70">Scottsdale Local</div>
               </div>
             </div>
           </FadeInUp>
@@ -284,33 +326,40 @@ export default function HomePage() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-24 px-6 bg-gradient-to-b from-stone-900 to-gray-900 text-white">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-24 px-6 bg-gradient-to-br from-color-primary to-color-secondary text-white relative overflow-hidden">
+        <div className="absolute inset-0 texture-overlay"></div>
+        <div className="floating-bean" style={{ top: '20%', left: '10%', animationDelay: '1s' }}></div>
+        <div className="floating-bean" style={{ top: '70%', right: '15%', animationDelay: '3s' }}></div>
+        
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <FadeInUp delay={0}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{fontFamily: 'var(--font-heading)'}}>
-              Experience the Difference Today
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 font-var-heading">
+              Experience Desert Coffee Culture
             </h2>
           </FadeInUp>
           <FadeInUp delay={100}>
-            <p className="text-xl text-gray-300 mb-10 leading-relaxed">
-              Join the Scottsdale coffee community that values quality, craft, and connection
+            <p className="text-xl opacity-90 mb-10 leading-relaxed">
+              Join us in the heart of Scottsdale where every cup tells the story of Arizona's coffee renaissance
             </p>
           </FadeInUp>
           <FadeInUp delay={200}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <ShineBorder borderRadius={12} duration={3} color={["#f59e0b", "#d97706", "#92400e"]}>
-                <a href="/location" className="px-10 py-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-bold rounded-xl text-lg hover:from-amber-700 hover:to-orange-700 transition-all duration-300 flex items-center gap-2">
-                  Visit Our Cafe
-                  <ArrowRight className="w-5 h-5" />
-                </a>
-              </ShineBorder>
-              <a href="/menu" className="px-10 py-4 border-2 border-amber-500 text-amber-400 font-semibold rounded-xl text-lg hover:bg-amber-500 hover:text-white transition-all duration-300">
-                Browse Menu
+              <a 
+                href="/visit" 
+                className="inline-block px-10 py-4 bg-white text-color-primary font-bold rounded-full text-lg hover:bg-white/90 transition-all duration-300 hover:scale-105"
+              >
+                Plan Your Visit
+              </a>
+              <a 
+                href="/about" 
+                className="inline-block px-10 py-4 border-2 border-white text-white font-semibold rounded-full text-lg hover:bg-white hover:text-color-primary transition-all duration-300"
+              >
+                Our Story
               </a>
             </div>
           </FadeInUp>
         </div>
       </section>
-    </main>
-  );
+    </div>
+  )
 }
