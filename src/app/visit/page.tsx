@@ -1,230 +1,257 @@
 "use client";
 
-import FadeInUp from '@/components/fade-in-up';
-import { cn } from '@/lib/utils';
+import { FadeInUp } from "@/components/fade-in-up";
+import { cn } from "@/lib/utils";
 
-export default function Visit() {
+const Visit = () => {
   return (
-    <>
+    <div className="min-h-screen bg-white">
       <style jsx>{`
+        .sand-texture {
+          background-image: radial-gradient(circle at 20% 80%, rgba(210, 180, 140, 0.1) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 20%, rgba(222, 184, 135, 0.1) 0%, transparent 50%);
+        }
         .coffee-bean-scatter {
-          background-image: 
-            radial-gradient(circle at 15% 20%, rgba(139, 69, 19, 0.1) 2px, transparent 2px),
-            radial-gradient(circle at 75% 40%, rgba(139, 69, 19, 0.08) 1.5px, transparent 1.5px),
-            radial-gradient(circle at 35% 70%, rgba(139, 69, 19, 0.06) 2.5px, transparent 2.5px),
-            radial-gradient(circle at 85% 80%, rgba(139, 69, 19, 0.09) 1px, transparent 1px),
-            radial-gradient(circle at 25% 90%, rgba(139, 69, 19, 0.07) 2px, transparent 2px);
-          background-size: 200px 200px, 150px 150px, 180px 180px, 120px 120px, 160px 160px;
-        }
-        .desert-curve {
-          clip-path: ellipse(100% 100% at 50% 0%);
-        }
-        .parallax-layer {
-          transform: translateZ(0);
-          will-change: transform;
+          background-image: radial-gradient(2px 4px at 20% 30%, #8B4513, transparent),
+                            radial-gradient(2px 4px at 40% 70%, #A0522D, transparent),
+                            radial-gradient(1px 3px at 90% 40%, #8B4513, transparent),
+                            radial-gradient(1px 3px at 60% 90%, #A0522D, transparent),
+                            radial-gradient(2px 4px at 10% 90%, #8B4513, transparent),
+                            radial-gradient(1px 3px at 80% 10%, #A0522D, transparent);
         }
       `}</style>
 
       {/* Location Map Section */}
-      <section id="location-map" className="relative py-24 px-6 bg-gradient-to-b from-orange-50 to-amber-50">
-        <div className="absolute inset-0 coffee-bean-scatter opacity-30"></div>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 relative z-10">
+      <section className="py-24 px-6 sand-texture">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-2 flex flex-col justify-center">
-            <FadeInUp delay={0}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-amber-900" style={{fontFamily: 'var(--font-heading)'}}>Find Us in Scottsdale</h2>
-            </FadeInUp>
-            <div className="space-y-6">
-              <FadeInUp delay={100}>
-                <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200">
-                  <span className="font-semibold block text-amber-800 mb-2 text-lg">Address</span>
-                  <p className="text-amber-700 text-lg">Scottsdale, AZ</p>
-                </div>
-              </FadeInUp>
-              <FadeInUp delay={200}>
-                <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200">
-                  <span className="font-semibold block text-amber-800 mb-2 text-lg">Hours</span>
-                  <p className="text-amber-700 text-lg">Mon-Fri: 6am-8pm<br />Sat-Sun: 7am-9pm</p>
-                </div>
-              </FadeInUp>
-              <FadeInUp delay={300}>
-                <div className="p-6 bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200">
-                  <span className="font-semibold block text-amber-800 mb-2 text-lg">Parking</span>
-                  <p className="text-amber-700 text-lg">Free parking available</p>
-                </div>
-              </FadeInUp>
-            </div>
-          </div>
-          <div className="lg:col-span-3">
-            <FadeInUp delay={200}>
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-8 border-white">
-                <div className="w-full h-full bg-gradient-to-br from-amber-100 to-orange-200 flex items-center justify-center relative">
-                  <img 
-                    src="https://source.unsplash.com/800x600/?desert-modern-coffee-shop-interior-Scottsdale-Arizona" 
-                    alt="Bean & Brew Coffee location" 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-amber-900/20 to-transparent"></div>
-                  <div className="absolute bottom-6 left-6 right-6 text-white">
-                    <h3 className="text-xl font-bold mb-2">Come Visit Us</h3>
-                    <p className="text-white/90">Experience the warmth of Scottsdale's premier coffee destination</p>
-                  </div>
-                </div>
-              </div>
-            </FadeInUp>
-          </div>
-        </div>
-      </section>
-
-      {/* Curved Section Divider */}
-      <div className="h-16 bg-amber-50 desert-curve"></div>
-
-      {/* Contact Section */}
-      <section id="contact" className="relative py-24 px-6 bg-gradient-to-br from-amber-900 to-orange-800 overflow-hidden">
-        <div className="absolute inset-0 parallax-layer" style={{
-          backgroundImage: 'url(https://source.unsplash.com/1920x1080/?Arizona-desert-landscape-morning-golden-hour-mountains)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-          opacity: 0.1
-        }}></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-900/90 to-orange-800/90"></div>
-        
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
-          <div>
-            <FadeInUp delay={0}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{fontFamily: 'var(--font-heading)'}}>Get in Touch</h2>
-              <p className="text-white/80 text-lg mb-10 leading-relaxed">We'd love to hear from you. Whether you have questions about our coffee, want to learn about our roasting process, or just want to say hello.</p>
+            <FadeInUp>
+              <h2 className="text-4xl font-bold mb-8 text-gray-900" style={{ fontFamily: 'var(--font-heading)' }}>Find Us in Scottsdale</h2>
             </FadeInUp>
             
             <div className="space-y-8">
               <FadeInUp delay={100}>
-                <div className="flex items-center gap-4 p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-                  <div className="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <span className="font-semibold block text-white mb-1">Phone</span>
-                    <p className="text-white/80">Contact us for current hours and information</p>
-                  </div>
+                <div>
+                  <span className="font-semibold block text-lg mb-2 text-amber-700">Address</span>
+                  <p className="text-gray-600 text-lg">Visit us in the heart of Scottsdale</p>
+                  <p className="text-gray-600">7425 E Shea Blvd, Scottsdale, AZ 85260</p>
                 </div>
               </FadeInUp>
               
               <FadeInUp delay={200}>
-                <div className="flex items-center gap-4 p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-                  <div className="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
+                <div>
+                  <span className="font-semibold block text-lg mb-2 text-amber-700">Hours</span>
+                  <p className="text-gray-600">Open daily for your coffee needs</p>
+                  <div className="space-y-1 mt-2">
+                    <p className="text-gray-600">Monday - Friday: 6:00 AM - 8:00 PM</p>
+                    <p className="text-gray-600">Saturday - Sunday: 7:00 AM - 9:00 PM</p>
                   </div>
-                  <div>
-                    <span className="font-semibold block text-white mb-1">Email</span>
-                    <p className="text-white/80">hello@beanandbrew.coffee</p>
+                </div>
+              </FadeInUp>
+              
+              <FadeInUp delay={300}>
+                <div>
+                  <span className="font-semibold block text-lg mb-2 text-amber-700">Parking</span>
+                  <p className="text-gray-600">Convenient parking available</p>
+                  <p className="text-gray-600">Free lot parking with easy access</p>
+                </div>
+              </FadeInUp>
+              
+              <FadeInUp delay={400}>
+                <div>
+                  <span className="font-semibold block text-lg mb-2 text-amber-700">Phone</span>
+                  <p className="text-gray-600 text-lg">(480) 555-BREW</p>
+                </div>
+              </FadeInUp>
+            </div>
+          </div>
+          
+          <FadeInUp delay={300} className="lg:col-span-3">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+              <img 
+                src="https://source.unsplash.com/800x600/?scottsdale-arizona-desert-morning-coffee-shop-location" 
+                alt="Bean & Brew Coffee location map" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-lg">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 bg-amber-600 rounded-full"></div>
+                  <span className="font-semibold text-gray-900">Bean & Brew Coffee</span>
+                </div>
+              </div>
+            </div>
+          </FadeInUp>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-24 px-6 bg-gradient-to-b from-amber-50 to-white">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div>
+            <FadeInUp>
+              <h2 className="text-4xl font-bold mb-4 text-gray-900" style={{ fontFamily: 'var(--font-heading)' }}>Get in Touch</h2>
+            </FadeInUp>
+            
+            <FadeInUp delay={100}>
+              <p className="text-gray-600 mb-8 text-lg">Questions about catering, events, or just want to say hello?</p>
+            </FadeInUp>
+            
+            <div className="space-y-8">
+              <FadeInUp delay={200}>
+                <div>
+                  <span className="font-semibold block text-lg mb-2 text-amber-700">Email</span>
+                  <p className="text-gray-600 text-lg">hello@beanandbrew.com</p>
+                </div>
+              </FadeInUp>
+              
+              <FadeInUp delay={300}>
+                <div>
+                  <span className="font-semibold block text-lg mb-2 text-amber-700">Phone</span>
+                  <p className="text-gray-600 text-lg">(480) 555-BREW</p>
+                </div>
+              </FadeInUp>
+              
+              <FadeInUp delay={400}>
+                <div>
+                  <span className="font-semibold block text-lg mb-2 text-amber-700">Social Media</span>
+                  <div className="flex gap-4 mt-3">
+                    <a href="#" className="text-amber-600 hover:text-amber-700 transition-colors">
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                      </svg>
+                    </a>
+                    <a href="#" className="text-amber-600 hover:text-amber-700 transition-colors">
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.161-1.499-.698-2.436-2.888-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.357-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+                      </svg>
+                    </a>
+                    <a href="#" className="text-amber-600 hover:text-amber-700 transition-colors">
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                      </svg>
+                    </a>
                   </div>
                 </div>
               </FadeInUp>
             </div>
           </div>
           
-          <div>
-            <FadeInUp delay={100}>
-              <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
-                <h3 className="text-2xl font-bold text-white mb-6">Send us a message</h3>
-                <form className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-white mb-2">First Name</label>
-                      <input type="text" className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:border-amber-400 focus:ring-2 focus:ring-amber-400 focus:ring-opacity-20 outline-none" placeholder="Your first name" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-white mb-2">Last Name</label>
-                      <input type="text" className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:border-amber-400 focus:ring-2 focus:ring-amber-400 focus:ring-opacity-20 outline-none" placeholder="Your last name" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-white mb-2">Email</label>
-                    <input type="email" className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:border-amber-400 focus:ring-2 focus:ring-amber-400 focus:ring-opacity-20 outline-none" placeholder="your@email.com" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-white mb-2">Message</label>
-                    <textarea rows={4} className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:border-amber-400 focus:ring-2 focus:ring-amber-400 focus:ring-opacity-20 outline-none resize-none" placeholder="Tell us how we can help..."></textarea>
-                  </div>
-                  <button type="submit" className="w-full px-6 py-4 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105">
-                    Send Message
-                  </button>
-                </form>
+          <FadeInUp delay={200} className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+            <form className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                  <input 
+                    type="text" 
+                    id="firstName" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                  <input 
+                    type="text" 
+                    id="lastName" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                  />
+                </div>
               </div>
-            </FadeInUp>
-          </div>
+              
+              <div>
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">Subject</label>
+                <select 
+                  id="subject" 
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all bg-white"
+                >
+                  <option>General Inquiry</option>
+                  <option>Catering Request</option>
+                  <option>Private Events</option>
+                  <option>Wholesale Orders</option>
+                  <option>Partnership Opportunities</option>
+                </select>
+              </div>
+              
+              <div>
+                <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">Message</label>
+                <textarea 
+                  id="message" 
+                  rows={5}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all resize-none"
+                  placeholder="Tell us how we can help..."
+                ></textarea>
+              </div>
+              
+              <button 
+                type="submit" 
+                className="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold py-4 px-6 rounded-xl hover:from-amber-700 hover:to-amber-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Send Message
+              </button>
+            </form>
+          </FadeInUp>
         </div>
       </section>
 
-      {/* Curved Section Divider */}
-      <div className="h-16 bg-gradient-to-br from-amber-900 to-orange-800 desert-curve transform rotate-180"></div>
-
       {/* Atmosphere Section */}
-      <section id="atmosphere" className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 parallax-layer" 
-          style={{
-            backgroundImage: 'url(https://source.unsplash.com/1920x1080/?coffee-shop-community-people-laptop-working-together)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
+      <section id="atmosphere" className="relative h-[70vh] flex items-center justify-center overflow-hidden coffee-bean-scatter">
+        <img 
+          src="https://source.unsplash.com/1600x900/?coffee-shop-storefront-patio-seating-southwestern-desert-warm-welcome" 
+          alt="Bean & Brew Coffee welcoming storefront and patio" 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/50" />
         
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
-          <FadeInUp delay={0}>
-            <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tight" style={{fontFamily: 'var(--font-heading)'}}>
-              More Than Coffee
+        <div className="relative text-center text-white max-w-4xl px-6">
+          <FadeInUp>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
+              Your Desert Coffee Oasis Awaits
             </h2>
           </FadeInUp>
-          <FadeInUp delay={100}>
-            <p className="text-xl md:text-2xl text-white/80 mb-8 leading-relaxed max-w-2xl mx-auto">
-              A gathering place where Scottsdale's creative spirit meets exceptional coffee craftsmanship
+          
+          <FadeInUp delay={200}>
+            <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto leading-relaxed">
+              Step into our warm, welcoming space where Scottsdale's desert beauty meets artisan coffee culture. 
+              Every cup tells a story, every visit creates a memory.
             </p>
           </FadeInUp>
-          <FadeInUp delay={200}>
-            <div className="flex flex-wrap justify-center gap-8 text-white/70">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-                <span>Artisanal Roasting</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-                <span>Desert Modern Design</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-                <span>Community Focused</span>
-              </div>
+          
+          <FadeInUp delay={400}>
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a 
+                href="tel:(480)555-2739" 
+                className="px-8 py-4 bg-white text-amber-900 font-bold rounded-full text-lg hover:bg-amber-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Call Now
+              </a>
+              <a 
+                href="#contact" 
+                className="px-8 py-4 border-2 border-white text-white font-semibold rounded-full text-lg hover:bg-white hover:text-amber-900 transition-all duration-300 transform hover:scale-105"
+              >
+                Get Directions
+              </a>
             </div>
           </FadeInUp>
         </div>
         
-        {/* Coffee bean scatter overlay */}
-        <div className="absolute inset-0 coffee-bean-scatter opacity-20 pointer-events-none"></div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-16 px-6 bg-gradient-to-r from-amber-100 to-orange-100">
-        <div className="max-w-3xl mx-auto text-center">
-          <FadeInUp delay={0}>
-            <h3 className="text-3xl font-bold text-amber-900 mb-4" style={{fontFamily: 'var(--font-heading)'}}>
-              Ready to Visit?
-            </h3>
-            <p className="text-amber-700 text-lg mb-8">
-              Come experience the warmth of Bean & Brew Coffee in the heart of Scottsdale
-            </p>
-            <a href="/" className="inline-block px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-              View Our Menu
-            </a>
-          </FadeInUp>
+        {/* Decorative coffee steam animation */}
+        <div className="absolute bottom-10 right-10 opacity-30">
+          <div className="w-2 h-20 bg-white/20 rounded-full animate-pulse"></div>
+          <div className="w-1 h-16 bg-white/10 rounded-full ml-3 -mt-16 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+          <div className="w-1 h-12 bg-white/10 rounded-full ml-1 -mt-12 animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
       </section>
-    </>
+    </div>
   );
-}
+};
+
+export default Visit;
