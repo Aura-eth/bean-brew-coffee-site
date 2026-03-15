@@ -12,8 +12,6 @@
     "next": "^15",
     "react": "^19",
     "react-dom": "^19",
-    "tailwindcss": "^4",
-    "@tailwindcss/postcss": "^4",
     "clsx": "^2.0.0",
     "tailwind-merge": "^2.0.0",
     "lucide-react": "^0.460"
@@ -23,6 +21,8 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "@tailwindcss/postcss": "^4",
     "eslint": "^8",
     "eslint-config-next": "^15"
   }
