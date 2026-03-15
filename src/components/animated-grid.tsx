@@ -9,7 +9,7 @@ interface AnimatedGridProps {
   color?: string;
 }
 
-export default function AnimatedGrid({ numSquares = 30, maxOpacity = 0.08, duration = 4, className = "", color = "currentColor" }: AnimatedGridProps) {
+function AnimatedGrid({ numSquares = 30, maxOpacity = 0.08, duration = 4, className = "", color = "currentColor" }: AnimatedGridProps) {
   const id = useId();
   const containerRef = useRef<SVGSVGElement>(null);
   const [dims, setDims] = useState({ w: 0, h: 0 });
@@ -43,3 +43,6 @@ export default function AnimatedGrid({ numSquares = 30, maxOpacity = 0.08, durat
     </svg>
   );
 }
+
+export { AnimatedGrid };
+export default AnimatedGrid;

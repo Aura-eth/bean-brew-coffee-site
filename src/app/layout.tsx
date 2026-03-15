@@ -1,55 +1,81 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { Cormorant_Garamond, Source_Sans_3 } from 'next/font/google'
-import { FadeInUp } from '@/components/fade-in-up'
-import { cn } from '@/lib/utils'
-import './globals.css'
+import { Inter, Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import "./globals.css";
 
-const heading = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-heading' })
-const body = Source_Sans_3({ subsets: ['latin'], variable: '--font-body' })
+const cormorantGaramond = Cormorant_Garamond({ 
+  subsets: ["latin"],
+  variable: "--font-heading",
+  weight: ["300", "400", "500", "600", "700"]
+});
 
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Menu", href: "/menu" },
-  { label: "Our Story", href: "/story" },
-  { label: "Events", href: "/events" },
-  { label: "Visit Us", href: "/visit" }
-]
+const sourceSans3 = Source_Sans_3({ 
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["300", "400", "500", "600", "700"]
+});
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: "--font-fallback"
+});
+
+function Navigation() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 50);
+    };
 
-  const Nav = () => (
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "Menu", href: "/menu" },
+    { label: "About", href: "/about" },
+    { label: "Events", href: "/events" },
+    { label: "Contact", href: "/contact" }
+  ];
+
+  return (
     <nav className={cn(
-      'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
       isScrolled 
-        ? 'bg-white/90 backdrop-blur-md shadow-sm' 
-        : 'bg-transparent'
+        ? "bg-white/95 backdrop-blur-sm shadow-lg" 
+        : "bg-transparent"
     )}>
-      <div className="container mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link href="/" className="text-2xl font-bold text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors">
-            <span className="font-[var(--font-heading)]">Bean & Brew</span>
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center">
+              <span className="text-white font-bold text-lg">B</span>
+            </div>
+            <span className={cn(
+              "text-xl font-semibold",
+              isScrolled ? "text-[var(--color-text)]" : "text-white"
+            )}>
+              Bean & Brew
+            </span>
           </Link>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <Link 
+              <Link
                 key={link.href}
                 href={link.href}
-                className="text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors duration-200 font-medium"
+                className={cn(
+                  "font-medium transition-colors duration-200 hover:text-[var(--color-secondary)]",
+                  isScrolled ? "text-[var(--color-text)]" : "text-white"
+                )}
               >
                 {link.label}
               </Link>
@@ -57,197 +83,198 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors"
+            className={cn(
+              "md:hidden flex flex-col space-y-1 p-2",
+              isScrolled ? "text-[var(--color-text)]" : "text-white"
+            )}
           >
-            <div className="w-6 h-6 flex flex-col justify-center space-y-1">
-              <span className={cn('block h-0.5 w-6 bg-current transform transition-transform', isMobileMenuOpen && 'rotate-45 translate-y-2')} />
-              <span className={cn('block h-0.5 w-6 bg-current transition-opacity', isMobileMenuOpen && 'opacity-0')} />
-              <span className={cn('block h-0.5 w-6 bg-current transform transition-transform', isMobileMenuOpen && '-rotate-45 -translate-y-2')} />
-            </div>
+            <span className={cn(
+              "block w-6 h-0.5 transition-all duration-300",
+              isMobileMenuOpen ? "rotate-45 translate-y-1.5 bg-[var(--color-secondary)]" : "bg-current"
+            )} />
+            <span className={cn(
+              "block w-6 h-0.5 transition-all duration-300",
+              isMobileMenuOpen ? "opacity-0" : "bg-current"
+            )} />
+            <span className={cn(
+              "block w-6 h-0.5 transition-all duration-300",
+              isMobileMenuOpen ? "-rotate-45 -translate-y-1.5 bg-[var(--color-secondary)]" : "bg-current"
+            )} />
           </button>
         </div>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-t border-[var(--color-surface)] py-4">
+        <div className={cn(
+          "md:hidden transition-all duration-300 overflow-hidden",
+          isMobileMenuOpen ? "max-h-64 pb-6" : "max-h-0"
+        )}>
+          <div className="flex flex-col space-y-4 pt-4">
             {navLinks.map((link) => (
-              <Link 
+              <Link
                 key={link.href}
                 href={link.href}
-                className="block px-6 py-3 text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface)] transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
+                className="text-[var(--color-text)] font-medium hover:text-[var(--color-secondary)] transition-colors duration-200"
               >
                 {link.label}
               </Link>
             ))}
           </div>
-        )}
+        </div>
       </div>
     </nav>
-  )
+  );
+}
 
-  const Footer = () => (
-    <footer className="bg-[var(--color-text)] text-[var(--color-bg)] py-16">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+function Footer() {
+  return (
+    <footer className="bg-[var(--color-text)] text-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <FadeInUp delay={0}>
-              <h3 className="text-3xl font-bold mb-4 font-[var(--font-heading)] text-[var(--color-accent)]">Bean & Brew Coffee</h3>
-              <p className="text-gray-300 leading-relaxed">Crafting exceptional coffee experiences in the heart of the desert, where every cup tells a story of passion and community.</p>
-            </FadeInUp>
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center">
+                <span className="text-white font-bold text-xl">B</span>
+              </div>
+              <span className="text-2xl font-semibold">Bean & Brew</span>
+            </div>
+            <p className="text-gray-300 mb-6 leading-relaxed">
+              Crafting exceptional coffee experiences in the heart of Scottsdale. Every cup tells a story of passion, quality, and community.
+            </p>
+            <div className="flex space-x-4">
+              <a href="#" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                </svg>
+              </a>
+              <a href="#" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.747.1.12.112.225.085.347-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.162-1.499-.698-2.436-2.888-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.357-.629-2.748-1.378 0 0-.599 2.282-.744 2.84-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/>
+                </svg>
+              </a>
+              <a href="#" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+            </div>
           </div>
 
           {/* Navigation Column */}
           <div>
-            <FadeInUp delay={100}>
-              <h4 className="text-lg font-semibold mb-6 text-[var(--color-secondary)]">Navigate</h4>
-              <ul className="space-y-3">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link 
-                      href={link.href}
-                      className="text-gray-300 hover:text-[var(--color-accent)] transition-colors duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </FadeInUp>
+            <h3 className="text-lg font-semibold mb-6">Navigation</h3>
+            <ul className="space-y-4">
+              <li><Link href="/" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">Home</Link></li>
+              <li><Link href="/menu" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">Menu</Link></li>
+              <li><Link href="/about" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">About</Link></li>
+              <li><Link href="/events" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">Events</Link></li>
+              <li><Link href="/contact" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">Contact</Link></li>
+            </ul>
           </div>
 
-          {/* Contact Column */}
+          {/* Contact Info Column */}
           <div>
-            <FadeInUp delay={200}>
-              <h4 className="text-lg font-semibold mb-6 text-[var(--color-secondary)]">Contact</h4>
-              <div className="space-y-3 text-gray-300">
-                <p>7014 E Camelback Rd<br />Scottsdale, AZ</p>
-                <p>
-                  <a href="tel:(480) 555-0199" className="hover:text-[var(--color-accent)] transition-colors">
-                    (480) 555-0199
-                  </a>
-                </p>
-                <p>
-                  <a href="mailto:hello@beanandbrew.com" className="hover:text-[var(--color-accent)] transition-colors">
-                    hello@beanandbrew.com
-                  </a>
-                </p>
+            <h3 className="text-lg font-semibold mb-6">Contact Info</h3>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <svg className="w-5 h-5 text-[var(--color-secondary)] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                </svg>
+                <span className="text-gray-300">7014 E Camelback Rd<br />Scottsdale, AZ</span>
               </div>
-            </FadeInUp>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-[var(--color-secondary)]" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                </svg>
+                <a href="tel:(480) 555-0199" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">(480) 555-0199</a>
+              </div>
+              <div className="flex items-center space-x-3">
+                <svg className="w-5 h-5 text-[var(--color-secondary)]" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                <a href="mailto:hello@beanandbrew.com" className="text-gray-300 hover:text-[var(--color-secondary)] transition-colors duration-200">hello@beanandbrew.com</a>
+              </div>
+            </div>
           </div>
 
-          {/* Social Column */}
+          {/* Hours Column */}
           <div>
-            <FadeInUp delay={300}>
-              <h4 className="text-lg font-semibold mb-6 text-[var(--color-secondary)]">Connect</h4>
-              <div className="flex space-x-4">
-                <a href="#" className="w-10 h-10 bg-[var(--color-primary)] rounded-full flex items-center justify-center hover:bg-[var(--color-accent)] transition-colors">
-                  <span className="sr-only">Facebook</span>
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-[var(--color-primary)] rounded-full flex items-center justify-center hover:bg-[var(--color-accent)] transition-colors">
-                  <span className="sr-only">Instagram</span>
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C23.975 5.367 18.608.001 12.017.001zM8.449 16.988c-1.297 0-2.343-1.046-2.343-2.343s1.046-2.343 2.343-2.343 2.343 1.046 2.343 2.343-1.046 2.343-2.343 2.343zm7.138 0c-1.297 0-2.343-1.046-2.343-2.343s1.046-2.343 2.343-2.343 2.343 1.046 2.343 2.343-1.046 2.343-2.343 2.343z" />
-                  </svg>
-                </a>
+            <h3 className="text-lg font-semibold mb-6">Hours</h3>
+            <div className="space-y-2 text-gray-300">
+              <div className="flex justify-between">
+                <span>Mon - Fri</span>
+                <span>6:00 AM - 8:00 PM</span>
               </div>
-            </FadeInUp>
+              <div className="flex justify-between">
+                <span>Saturday</span>
+                <span>7:00 AM - 9:00 PM</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Sunday</span>
+                <span>7:00 AM - 7:00 PM</span>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Copyright Row */}
-        <div className="border-t border-gray-700 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-gray-700 pt-8 mt-12">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm">
               © 2024 Bean & Brew Coffee. All rights reserved.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-[var(--color-accent)] text-sm transition-colors">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-[var(--color-accent)] text-sm transition-colors">Terms of Service</a>
+            <div className="flex space-x-6 text-sm text-gray-400">
+              <a href="#" className="hover:text-[var(--color-secondary)] transition-colors duration-200">Privacy Policy</a>
+              <a href="#" className="hover:text-[var(--color-secondary)] transition-colors duration-200">Terms of Service</a>
+              <a href="#" className="hover:text-[var(--color-secondary)] transition-colors duration-200">Accessibility</a>
             </div>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
+}
 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={cn(heading.variable, body.variable)}>
+    <html lang="en" className={cn(cormorantGaramond.variable, sourceSans3.variable, inter.variable)}>
       <head>
         <style>{`
           :root {
             --color-primary: #8B4513;
             --color-secondary: #D2691E;
             --color-accent: #CD853F;
-            --color-bg: #FDF5E6;
+            --color-bg: #FDF6E3;
             --color-text: #2F1B14;
-            --color-surface: #F5E6D3;
-            --color-muted: #A0886B;
-            --space-section: 5rem;
-            --space-content: 3rem;
-            --space-element: 1.5rem;
+            --color-surface: #F5EFE7;
+            --color-muted: #8B7355;
+            --space-section: 6rem;
+            --space-content: 2rem;
+            --space-element: 1rem;
             --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --duration-fast: 150ms;
+            --duration-fast: 200ms;
             --duration-normal: 300ms;
             --duration-slow: 500ms;
-            --font-heading: ${heading.style.fontFamily};
-            --font-body: ${body.style.fontFamily};
-          }
-          
-          body {
-            font-family: var(--font-body);
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.7;
-          }
-          
-          h1, h2, h3, h4, h5, h6 {
-            font-family: var(--font-heading);
-            line-height: 1.3;
-          }
-          
-          .coffee-bean-pattern {
-            background-image: radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.05) 2px, transparent 2px),
-                            radial-gradient(circle at 80% 50%, rgba(205, 133, 63, 0.05) 2px, transparent 2px);
-            background-size: 60px 40px;
-          }
-          
-          .steam-hover {
-            position: relative;
-            overflow: hidden;
-          }
-          
-          .steam-hover:hover::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-            transform: translateX(-100%);
-            animation: steam 1s ease-out;
-          }
-          
-          @keyframes steam {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            --font-heading: var(--font-cormorant-garamond), 'Playfair Display', serif;
+            --font-body: var(--font-source-sans-3), var(--font-fallback), system-ui, -apple-system, sans-serif;
           }
         `}</style>
       </head>
-      <body className="antialiased">
-        <Nav />
-        <main className="pt-20">
+      <body className="bg-[var(--color-bg)] text-[var(--color-text)] font-[var(--font-body)] antialiased">
+        <Navigation />
+        <main className="min-h-screen">
           {children}
         </main>
         <Footer />
       </body>
     </html>
-  )
+  );
 }
