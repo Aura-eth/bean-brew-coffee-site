@@ -1,266 +1,310 @@
 "use client";
 
 import { FadeInUp } from '@/components/fade-in-up';
-import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
-export default function VisitPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+const coffeeSpots = [
+  {
+    name: 'Scottsdale Quarter',
+    address: '15059 N Scottsdale Rd, Scottsdale, AZ 85254',
+    hours: {
+      weekdays: '6:00 AM - 8:00 PM',
+      weekends: '7:00 AM - 9:00 PM'
+    },
+    phone: '(480) 555-BEAN',
+    parking: 'Ample street parking and covered garage'
+  }
+];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-  };
+const contactInfo = {
+  email: 'hello@beanandbrew.coffee',
+  phone: '(480) 555-BEAN',
+  address: '15059 N Scottsdale Rd\nScottsdale, AZ 85254',
+  hours: 'Mon-Fri: 6am-8pm\nSat-Sun: 7am-9pm'
+};
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
+export default function Visit() {
   return (
     <>
-      <style>{`
-        .coffee-texture {
-          background-image: radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.1) 0%, transparent 50%), 
-                           radial-gradient(circle at 80% 20%, rgba(160, 82, 45, 0.08) 0%, transparent 50%),
-                           radial-gradient(circle at 40% 80%, rgba(101, 67, 33, 0.06) 0%, transparent 50%);
+      <style jsx>{`
+        .coffee-bean-pattern {
+          background-image: radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                           radial-gradient(circle at 80% 30%, rgba(160, 82, 45, 0.1) 0%, transparent 50%),
+                           radial-gradient(circle at 40% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
         }
-        .linen-texture {
-          background-image: 
-            linear-gradient(45deg, rgba(139, 69, 19, 0.02) 25%, transparent 25%), 
-            linear-gradient(-45deg, rgba(139, 69, 19, 0.02) 25%, transparent 25%),
-            linear-gradient(45deg, transparent 75%, rgba(160, 82, 45, 0.02) 75%), 
-            linear-gradient(-45deg, transparent 75%, rgba(160, 82, 45, 0.02) 75%);
-          background-size: 20px 20px;
-          background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        
+        .desert-gradient-hover {
+          transition: all 0.3s ease;
         }
-        .paper-texture {
-          background-image: 
-            repeating-linear-gradient(
-              90deg,
-              transparent,
-              transparent 2px,
-              rgba(139, 69, 19, 0.03) 2px,
-              rgba(139, 69, 19, 0.03) 4px
-            ),
-            repeating-linear-gradient(
-              0deg,
-              transparent,
-              transparent 2px,
-              rgba(160, 82, 45, 0.02) 2px,
-              rgba(160, 82, 45, 0.02) 4px
-            );
-        }
-        @keyframes float-beans {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(180deg); }
-        }
-        .floating-bean {
-          animation: float-beans 8s ease-in-out infinite;
-        }
-        .floating-bean:nth-child(2) {
-          animation-delay: -2s;
-        }
-        .floating-bean:nth-child(3) {
-          animation-delay: -4s;
+        
+        .desert-gradient-hover:hover {
+          background: linear-gradient(135deg, #8B4513 0%, #D2691E  50%, #FF8C42 100%);
+          transform: translateY(-2px);
         }
       `}</style>
       
       {/* Location Map Section */}
-      <section id="location-map" className="py-24 px-6 coffee-texture">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12">
+      <section id="location-map" className="py-24 px-6 coffee-bean-pattern">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-2 flex flex-col justify-center">
             <FadeInUp delay={0}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-amber-900">Visit Us in Scottsdale</h2>
+              <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'var(--font-heading)' }}>
+                Find Us in Scottsdale
+              </h2>
             </FadeInUp>
             
-            <FadeInUp delay={100} className="space-y-8">
-              <div>
-                <span className="font-bold block text-lg text-amber-800 mb-2">Address</span>
-                <p className="text-amber-700 text-lg">Scottsdale, AZ</p>
-              </div>
-              
-              <div>
-                <span className="font-bold block text-lg text-amber-800 mb-3">Hours</span>
-                <div className="space-y-2 text-amber-700">
-                  <div className="flex justify-between items-center py-1">
-                    <span className="font-medium">Monday - Thursday</span>
-                    <span>6 AM - 8 PM</span>
+            <div className="space-y-6">
+              {coffeeSpots.map((spot, i) => (
+                <FadeInUp key={i} delay={100 * (i + 1)}>
+                  <div className="space-y-4">
+                    <div>
+                      <span className="font-semibold block mb-2 text-lg">Address</span>
+                      <p className="text-muted leading-relaxed">
+                        Visit us in the heart of Scottsdale<br/>
+                        {spot.address}
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <span className="font-semibold block mb-2">Hours</span>
+                      <p className="text-muted">
+                        Open daily for your coffee needs<br/>
+                        Mon-Fri: {spot.hours.weekdays}<br/>
+                        Sat-Sun: {spot.hours.weekends}
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <span className="font-semibold block mb-2">Phone</span>
+                      <p className="text-muted">{spot.phone}</p>
+                    </div>
+                    
+                    <div>
+                      <span className="font-semibold block mb-2">Parking</span>
+                      <p className="text-muted">
+                        Convenient parking available<br/>
+                        {spot.parking}
+                      </p>
+                    </div>
+                    
+                    <div className="pt-4">
+                      <a 
+                        href={`https://maps.google.com/?q=${encodeURIComponent(spot.address)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-6 py-3 bg-primary text-primary-fg rounded-full font-medium hover:bg-primary/90 transition"
+                      >
+                        Get Directions
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="font-medium">Friday</span>
-                    <span>6 AM - 9 PM</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="font-medium">Saturday</span>
-                    <span>7 AM - 9 PM</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="font-medium">Sunday</span>
-                    <span>7 AM - 6 PM</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <span className="font-bold block text-lg text-amber-800 mb-2">Phone</span>
-                <p className="text-amber-700 text-lg">(480) 555-BREW</p>
-              </div>
-            </FadeInUp>
+                </FadeInUp>
+              ))}
+            </div>
           </div>
           
           <FadeInUp delay={200} className="lg:col-span-3">
-            <div className="relative h-96 lg:h-full min-h-[400px] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative h-[500px] rounded-2xl overflow-hidden bg-muted">
               <img 
-                src="https://source.unsplash.com/800x600/?scottsdale+desert+mountains+coffee+shop+exterior" 
-                alt="Bean & Brew location in Scottsdale" 
-                className="absolute inset-0 w-full h-full object-cover"
+                src="https://source.unsplash.com/800x500/?coffee+shop+exterior+scottsdale+desert+modern" 
+                alt="Bean & Brew Coffee location" 
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-amber-900/20 via-transparent to-amber-600/10" />
-              
-              {/* Floating coffee beans */}
-              <div className="floating-bean absolute top-4 right-8 w-3 h-2 bg-amber-800 rounded-full opacity-20"></div>
-              <div className="floating-bean absolute bottom-12 left-12 w-2 h-3 bg-amber-900 rounded-full opacity-15"></div>
-              <div className="floating-bean absolute top-1/3 left-1/4 w-2 h-2 bg-amber-700 rounded-full opacity-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 text-white">
+                <p className="text-lg font-medium">Your Desert Coffee Destination</p>
+              </div>
             </div>
           </FadeInUp>
         </div>
       </section>
-
+      
       {/* Contact Section */}
-      <section id="contact" className="py-32 px-6 linen-texture">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div>
+      <section id="contact" className="py-24 px-6 bg-muted/20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
             <FadeInUp delay={0}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-amber-900">Connect With Us</h2>
+              <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
+                Get in Touch
+              </h2>
             </FadeInUp>
             <FadeInUp delay={100}>
-              <p className="text-xl text-amber-700 mb-12 leading-relaxed">Questions about our coffee or events? We'd love to hear from you</p>
+              <p className="text-lg text-muted max-w-2xl mx-auto">
+                Questions about catering, events, or just want to chat about coffee?
+              </p>
+            </FadeInUp>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            {/* Contact Form */}
+            <FadeInUp delay={200}>
+              <div className="bg-background p-8 rounded-2xl border desert-gradient-hover">
+                <h3 className="text-xl font-semibold mb-6">Send Us a Message</h3>
+                <form className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">First Name</label>
+                      <input 
+                        type="text" 
+                        className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                        placeholder="Your first name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Last Name</label>
+                      <input 
+                        type="text" 
+                        className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                        placeholder="Your last name"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Email</label>
+                    <input 
+                      type="email" 
+                      className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Phone</label>
+                    <input 
+                      type="tel" 
+                      className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                      placeholder="(480) 555-0123"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Inquiry Type</label>
+                    <select className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition">
+                      <option>General Question</option>
+                      <option>Catering Inquiry</option>
+                      <option>Private Event</option>
+                      <option>Coffee Consultation</option>
+                      <option>Partnership Opportunity</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Message</label>
+                    <textarea 
+                      rows={5}
+                      className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none"
+                      placeholder="Tell us how we can help..."
+                    ></textarea>
+                  </div>
+                  
+                  <button 
+                    type="submit"
+                    className="w-full px-6 py-4 bg-primary text-primary-fg rounded-lg font-medium hover:bg-primary/90 transition"
+                  >
+                    Send Message
+                  </button>
+                </form>
+              </div>
             </FadeInUp>
             
-            <FadeInUp delay={200} className="space-y-8">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-none">
-                  <svg className="w-6 h-6 text-amber-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
+            {/* Contact Info */}
+            <FadeInUp delay={300}>
+              <div className="space-y-8">
                 <div>
-                  <span className="font-bold block text-lg text-amber-800 mb-1">Location</span>
-                  <p className="text-amber-700">Scottsdale, AZ<br />In the heart of Old Town</p>
+                  <h3 className="text-xl font-semibold mb-6">Visit Our Café</h3>
+                  <div className="space-y-6">
+                    <div>
+                      <span className="font-semibold block mb-2 text-primary">Location</span>
+                      <p className="text-muted whitespace-pre-line">{contactInfo.address}</p>
+                    </div>
+                    
+                    <div>
+                      <span className="font-semibold block mb-2 text-primary">Hours</span>
+                      <p className="text-muted whitespace-pre-line">{contactInfo.hours}</p>
+                    </div>
+                    
+                    <div>
+                      <span className="font-semibold block mb-2 text-primary">Phone</span>
+                      <a href={`tel:${contactInfo.phone}`} className="text-muted hover:text-primary transition">
+                        {contactInfo.phone}
+                      </a>
+                    </div>
+                    
+                    <div>
+                      <span className="font-semibold block mb-2 text-primary">Email</span>
+                      <a href={`mailto:${contactInfo.email}`} className="text-muted hover:text-primary transition">
+                        {contactInfo.email}
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-none">
-                  <svg className="w-6 h-6 text-amber-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
+                
+                <div className="bg-primary/10 p-6 rounded-xl">
+                  <h4 className="font-semibold mb-3 text-primary">Catering & Events</h4>
+                  <p className="text-sm text-muted mb-4">
+                    Planning a special event? We offer full-service catering with our signature coffee blends, 
+                    fresh pastries, and personalized service to make your occasion memorable.
+                  </p>
+                  <ul className="text-sm text-muted space-y-1">
+                    <li>• Corporate meetings & conferences</li>
+                    <li>• Wedding receptions & celebrations</li>
+                    <li>• Private parties & gatherings</li>
+                    <li>• Coffee cupping experiences</li>
+                  </ul>
                 </div>
-                <div>
-                  <span className="font-bold block text-lg text-amber-800 mb-1">Phone</span>
-                  <p className="text-amber-700">(480) 555-BREW</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-none">
-                  <svg className="w-6 h-6 text-amber-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <span className="font-bold block text-lg text-amber-800 mb-1">Email</span>
-                  <p className="text-amber-700">hello@beanandbrew.com</p>
+                
+                <div className="bg-secondary/10 p-6 rounded-xl">
+                  <h4 className="font-semibold mb-3 text-secondary">Coffee Education</h4>
+                  <p className="text-sm text-muted">
+                    Interested in learning more about coffee? Ask about our private cupping sessions, 
+                    brewing workshops, and barista training programs.
+                  </p>
                 </div>
               </div>
             </FadeInUp>
           </div>
-          
-          <FadeInUp delay={300}>
-            <div className="bg-white rounded-3xl p-10 shadow-xl paper-texture">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-bold text-amber-800 mb-2">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-4 border-2 border-amber-100 rounded-xl focus:border-amber-400 focus:outline-none transition-colors text-amber-900 bg-amber-50/50"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-bold text-amber-800 mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-4 border-2 border-amber-100 rounded-xl focus:border-amber-400 focus:outline-none transition-colors text-amber-900 bg-amber-50/50"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-bold text-amber-800 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows={5}
-                    className="w-full px-4 py-4 border-2 border-amber-100 rounded-xl focus:border-amber-400 focus:outline-none transition-colors text-amber-900 bg-amber-50/50 resize-none"
-                    required
-                  />
-                </div>
-                
-                <button
-                  type="submit"
-                  className="w-full bg-amber-800 hover:bg-amber-900 text-white font-bold py-4 px-8 rounded-xl transition-colors duration-300 text-lg"
-                >
-                  Send Message
-                </button>
-              </form>
-            </div>
-          </FadeInUp>
         </div>
       </section>
-
+      
       {/* Atmosphere Section */}
       <section id="atmosphere" className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <img 
-          src="https://source.unsplash.com/1200x800/?modern+coffeehouse+interior+warm+lighting+scottsdale" 
-          alt="Bean & Brew interior atmosphere" 
-          className="absolute inset-0 w-full h-full object-cover"
+          src="https://source.unsplash.com/1600x900/?cozy+coffee+shop+community+gathering+arizona+desert" 
+          alt="" 
+          className="absolute inset-0 w-full h-full object-cover" 
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-amber-900/80 via-amber-800/40 to-amber-600/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60" />
         
-        <FadeInUp delay={0} className="relative text-center text-white max-w-4xl px-6 z-10">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 tracking-tight">We're Waiting for You</h2>
-          <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl mx-auto">Step into our desert oasis where every cup tells a story and every visit feels like coming home. Your perfect coffee moment awaits.</p>
-        </FadeInUp>
-        
-        {/* Floating coffee beans for atmosphere */}
-        <div className="floating-bean absolute top-1/4 left-1/4 w-4 h-3 bg-amber-200 rounded-full opacity-30"></div>
-        <div className="floating-bean absolute bottom-1/3 right-1/3 w-3 h-4 bg-amber-300 rounded-full opacity-25"></div>
-        <div className="floating-bean absolute top-1/2 right-1/4 w-3 h-3 bg-amber-100 rounded-full opacity-20"></div>
+        <div className="relative text-center text-white max-w-3xl px-6">
+          <FadeInUp delay={0}>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ fontFamily: 'var(--font-heading)' }}>
+              Your Desert Coffee Sanctuary
+            </h2>
+          </FadeInUp>
+          <FadeInUp delay={100}>
+            <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Where the warmth of Scottsdale meets the comfort of exceptional coffee, 
+              creating moments of connection in every cup.
+            </p>
+          </FadeInUp>
+          <FadeInUp delay={200}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="/menu" 
+                className="px-8 py-4 bg-primary text-primary-fg rounded-full font-medium hover:bg-primary/90 transition"
+              >
+                Explore Our Menu
+              </a>
+              <a 
+                href="tel:(480)555-BEAN" 
+                className="px-8 py-4 bg-white/10 text-white rounded-full font-medium hover:bg-white/20 transition backdrop-blur-sm border border-white/20"
+              >
+                Call to Order
+              </a>
+            </div>
+          </FadeInUp>
+        </div>
       </section>
     </>
   );
