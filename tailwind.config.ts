@@ -1,10 +1,10 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -12,13 +12,7 @@ const config: Config = {
         primary: '#8B4513',
         secondary: '#D2691E',
         accent: '#CD853F',
-        surface: '#F5F5DC',
-        background: '#FFF8F0',
-        foreground: '#2C1810',
-      },
-      fontFamily: {
-        heading: ['Cormorant Garamond', 'serif'],
-        body: ['Source Sans 3', 'sans-serif'],
+        surface: '#F5E6D3'
       },
     },
   },
