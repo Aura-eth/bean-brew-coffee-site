@@ -10,9 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         primary: '#8B4513',
-        secondary: '#D2691E',
-        accent: '#CD853F',
+        secondary: '#D2B48C',
+        accent: '#FF6B35',
         surface: '#FFFFFF',
+        background: '#FDF8F3',
+        foreground: '#2C1810',
       },
       fontFamily: {
         heading: ['Cormorant Garamond', 'serif'],
