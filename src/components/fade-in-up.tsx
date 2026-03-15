@@ -7,7 +7,7 @@ interface FadeInUpProps {
   className?: string;
 }
 
-export function FadeInUp({ children, delay = 0, className = "" }: FadeInUpProps) {
+export default function FadeInUp({ children, delay = 0, className = "" }: FadeInUpProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 

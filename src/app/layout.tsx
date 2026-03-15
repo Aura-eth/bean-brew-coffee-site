@@ -1,226 +1,194 @@
-"use client";
+"use client"
 
-import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
-import "./globals.css";
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { Cormorant_Garamond, Source_Sans_3 } from 'next/font/google'
+import { FadeInUp } from '@/components/fade-in-up'
+import { cn } from '@/lib/utils'
+import './globals.css'
 
-const cormorantGaramond = Cormorant_Garamond({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  display: "swap",
-  fallback: ["Playfair Display", "serif"]
-});
-
-const sourceSans3 = Source_Sans_3({
-  subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-  fallback: ["Inter", "sans-serif"]
-});
+const heading = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-heading' })
+const body = Source_Sans_3({ subsets: ['latin'], variable: '--font-body' })
 
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Menu", href: "/menu" },
-  { label: "About", href: "/about" },
+  { label: "Our Story", href: "/story" },
   { label: "Events", href: "/events" },
-  { label: "Visit", href: "/visit" }
-];
+  { label: "Visit Us", href: "/visit" }
+]
 
-function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
-  return (
-    <header className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out",
+  const Nav = () => (
+    <nav className={cn(
+      'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
       isScrolled 
-        ? "bg-white/95 backdrop-blur-md shadow-sm" 
-        : "bg-transparent"
+        ? 'bg-white/90 backdrop-blur-md shadow-sm' 
+        : 'bg-transparent'
     )}>
-      <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold text-var(--color-primary) font-[var(--font-heading)]">
-          Bean & Brew
-        </Link>
-        
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors duration-200 font-medium",
-                "relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5",
-                "after:bg-[var(--color-primary)] after:transition-all after:duration-300",
-                "hover:after:w-full"
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between h-20">
+          <Link href="/" className="text-2xl font-bold text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors">
+            <span className="font-[var(--font-heading)]">Bean & Brew</span>
+          </Link>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.href}
+                href={link.href}
+                className="text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors duration-200 font-medium"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors"
+          >
+            <div className="w-6 h-6 flex flex-col justify-center space-y-1">
+              <span className={cn('block h-0.5 w-6 bg-current transform transition-transform', isMobileMenuOpen && 'rotate-45 translate-y-2')} />
+              <span className={cn('block h-0.5 w-6 bg-current transition-opacity', isMobileMenuOpen && 'opacity-0')} />
+              <span className={cn('block h-0.5 w-6 bg-current transform transition-transform', isMobileMenuOpen && '-rotate-45 -translate-y-2')} />
+            </div>
+          </button>
         </div>
-        
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden flex flex-col space-y-1.5 p-2"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span className={cn(
-            "w-6 h-0.5 bg-[var(--color-text)] transition-transform duration-300",
-            isMobileMenuOpen && "rotate-45 translate-y-2"
-          )} />
-          <span className={cn(
-            "w-6 h-0.5 bg-[var(--color-text)] transition-opacity duration-300",
-            isMobileMenuOpen && "opacity-0"
-          )} />
-          <span className={cn(
-            "w-6 h-0.5 bg-[var(--color-text)] transition-transform duration-300",
-            isMobileMenuOpen && "-rotate-45 -translate-y-2"
-          )} />
-        </button>
-        
+
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg md:hidden">
-            <div className="px-4 py-6 space-y-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors duration-200 font-medium py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-t border-[var(--color-surface)] py-4">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.href}
+                href={link.href}
+                className="block px-6 py-3 text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface)] transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         )}
-      </nav>
-    </header>
-  );
-}
+      </div>
+    </nav>
+  )
 
-function Footer() {
-  return (
-    <footer className="bg-[var(--color-surface)] text-[var(--color-text)] pt-16 pb-8">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+  const Footer = () => (
+    <footer className="bg-[var(--color-text)] text-[var(--color-bg)] py-16">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <h3 className="text-2xl font-bold text-[var(--color-primary)] font-[var(--font-heading)] mb-4">
-              Bean & Brew Coffee
-            </h3>
-            <p className="text-[var(--color-muted)] mb-6 leading-relaxed">
-              Crafting exceptional coffee experiences in the heart of Scottsdale, where desert warmth meets artisanal brewing.
-            </p>
+            <FadeInUp delay={0}>
+              <h3 className="text-3xl font-bold mb-4 font-[var(--font-heading)] text-[var(--color-accent)]">Bean & Brew Coffee</h3>
+              <p className="text-gray-300 leading-relaxed">Crafting exceptional coffee experiences in the heart of the desert, where every cup tells a story of passion and community.</p>
+            </FadeInUp>
           </div>
-          
+
           {/* Navigation Column */}
           <div>
-            <h4 className="font-semibold text-[var(--color-primary)] mb-4 font-[var(--font-heading)]">
-              Navigation
-            </h4>
-            <ul className="space-y-2">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <FadeInUp delay={100}>
+              <h4 className="text-lg font-semibold mb-6 text-[var(--color-secondary)]">Navigate</h4>
+              <ul className="space-y-3">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link 
+                      href={link.href}
+                      className="text-gray-300 hover:text-[var(--color-accent)] transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </FadeInUp>
           </div>
-          
+
           {/* Contact Column */}
           <div>
-            <h4 className="font-semibold text-[var(--color-primary)] mb-4 font-[var(--font-heading)]">
-              Contact
-            </h4>
-            <div className="space-y-2 text-[var(--color-muted)]">
-              <p>7014 E Camelback Rd</p>
-              <p>Scottsdale, AZ 85251</p>
-              <p className="mt-4">
-                <a href="tel:(480) 555-0199" className="hover:text-[var(--color-primary)] transition-colors">
-                  (480) 555-0199
-                </a>
-              </p>
-              <p>
-                <a href="mailto:hello@beanandbrew.com" className="hover:text-[var(--color-primary)] transition-colors">
-                  hello@beanandbrew.com
-                </a>
-              </p>
-            </div>
+            <FadeInUp delay={200}>
+              <h4 className="text-lg font-semibold mb-6 text-[var(--color-secondary)]">Contact</h4>
+              <div className="space-y-3 text-gray-300">
+                <p>7014 E Camelback Rd<br />Scottsdale, AZ</p>
+                <p>
+                  <a href="tel:(480) 555-0199" className="hover:text-[var(--color-accent)] transition-colors">
+                    (480) 555-0199
+                  </a>
+                </p>
+                <p>
+                  <a href="mailto:hello@beanandbrew.com" className="hover:text-[var(--color-accent)] transition-colors">
+                    hello@beanandbrew.com
+                  </a>
+                </p>
+              </div>
+            </FadeInUp>
           </div>
-          
-          {/* Hours & Social Column */}
+
+          {/* Social Column */}
           <div>
-            <h4 className="font-semibold text-[var(--color-primary)] mb-4 font-[var(--font-heading)]">
-              Hours & Social
-            </h4>
-            <div className="space-y-2 text-[var(--color-muted)] mb-6">
-              <p>Mon-Fri: 6:00 AM - 8:00 PM</p>
-              <p>Sat-Sun: 7:00 AM - 9:00 PM</p>
-            </div>
-            <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-[var(--color-primary)] text-white rounded-full flex items-center justify-center hover:bg-[var(--color-secondary)] transition-colors duration-200">
-                <span className="sr-only">Facebook</span>
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M20 10C20 4.477 15.523 0 10 0S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clipRule="evenodd" />
-                </svg>
-              </a>
-              <a href="#" className="w-10 h-10 bg-[var(--color-primary)] text-white rounded-full flex items-center justify-center hover:bg-[var(--color-secondary)] transition-colors duration-200">
-                <span className="sr-only">Instagram</span>
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clipRule="evenodd" />
-                </svg>
-              </a>
-            </div>
+            <FadeInUp delay={300}>
+              <h4 className="text-lg font-semibold mb-6 text-[var(--color-secondary)]">Connect</h4>
+              <div className="flex space-x-4">
+                <a href="#" className="w-10 h-10 bg-[var(--color-primary)] rounded-full flex items-center justify-center hover:bg-[var(--color-accent)] transition-colors">
+                  <span className="sr-only">Facebook</span>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                </a>
+                <a href="#" className="w-10 h-10 bg-[var(--color-primary)] rounded-full flex items-center justify-center hover:bg-[var(--color-accent)] transition-colors">
+                  <span className="sr-only">Instagram</span>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C23.975 5.367 18.608.001 12.017.001zM8.449 16.988c-1.297 0-2.343-1.046-2.343-2.343s1.046-2.343 2.343-2.343 2.343 1.046 2.343 2.343-1.046 2.343-2.343 2.343zm7.138 0c-1.297 0-2.343-1.046-2.343-2.343s1.046-2.343 2.343-2.343 2.343 1.046 2.343 2.343-1.046 2.343-2.343 2.343z" />
+                  </svg>
+                </a>
+              </div>
+            </FadeInUp>
           </div>
         </div>
-        
+
         {/* Copyright Row */}
-        <div className="border-t border-[var(--color-muted)]/20 pt-8 text-center text-[var(--color-muted)]">
-          <p>&copy; 2024 Bean & Brew Coffee. All rights reserved.</p>
+        <div className="border-t border-gray-700 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-400 text-sm">
+              © 2024 Bean & Brew Coffee. All rights reserved.
+            </p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="#" className="text-gray-400 hover:text-[var(--color-accent)] text-sm transition-colors">Privacy Policy</a>
+              <a href="#" className="text-gray-400 hover:text-[var(--color-accent)] text-sm transition-colors">Terms of Service</a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
-  );
-}
+  )
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
   return (
-    <html lang="en" className={`${cormorantGaramond.variable} ${sourceSans3.variable}`}>
-      <head />
-      <body className="font-[var(--font-body)] bg-[var(--color-bg)] text-[var(--color-text)] antialiased">
-        <style jsx>{`
+    <html lang="en" className={cn(heading.variable, body.variable)}>
+      <head>
+        <style>{`
           :root {
             --color-primary: #8B4513;
             --color-secondary: #D2691E;
             --color-accent: #CD853F;
-            --color-bg: #FDF6E3;
+            --color-bg: #FDF5E6;
             --color-text: #2F1B14;
-            --color-surface: #F5EFE7;
-            --color-muted: #8B7355;
+            --color-surface: #F5E6D3;
+            --color-muted: #A0886B;
             --space-section: 5rem;
             --space-content: 3rem;
             --space-element: 1.5rem;
@@ -228,16 +196,58 @@ export default function RootLayout({
             --duration-fast: 150ms;
             --duration-normal: 300ms;
             --duration-slow: 500ms;
-            --font-heading: var(--font-cormorant-garamond);
-            --font-body: var(--font-source-sans-3);
+            --font-heading: ${heading.style.fontFamily};
+            --font-body: ${body.style.fontFamily};
+          }
+          
+          body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+          }
+          
+          h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            line-height: 1.3;
+          }
+          
+          .coffee-bean-pattern {
+            background-image: radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.05) 2px, transparent 2px),
+                            radial-gradient(circle at 80% 50%, rgba(205, 133, 63, 0.05) 2px, transparent 2px);
+            background-size: 60px 40px;
+          }
+          
+          .steam-hover {
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .steam-hover:hover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            animation: steam 1s ease-out;
+          }
+          
+          @keyframes steam {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
           }
         `}</style>
-        <Navigation />
+      </head>
+      <body className="antialiased">
+        <Nav />
         <main className="pt-20">
           {children}
         </main>
         <Footer />
       </body>
     </html>
-  );
+  )
 }

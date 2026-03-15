@@ -1,207 +1,284 @@
-"use client"
+"use client";
 
-import FadeInUp from '@/components/fade-in-up'
-import ShineBorder from '@/components/shine-border'
-import { cn } from '@/lib/utils'
+import FadeInUp from "@/components/fade-in-up";
+import { cn } from "@/lib/utils";
 
 export default function EventsPage() {
+  const events = [
+    {
+      title: "Acoustic Nights",
+      date: "Every Friday 7-9 PM",
+      description: "Local musicians perform in our cozy atmosphere",
+      month: "FRI",
+      day: "7-9"
+    },
+    {
+      title: "Coffee Cupping Sessions",
+      date: "Saturday Mornings",
+      description: "Learn to taste coffee like a pro with our expert roasters",
+      month: "SAT",
+      day: "AM"
+    },
+    {
+      title: "Community Book Club",
+      date: "First Monday of Each Month",
+      description: "Monthly book discussions over coffee and pastries",
+      month: "MON",
+      day: "1st"
+    }
+  ];
+
+  const galleryImages = [
+    {
+      url: "https://source.unsplash.com/400x600/?acoustic-guitar-performance-coffee-shop-intimate-lighting",
+      alt: "Acoustic performance in cozy coffee shop setting"
+    },
+    {
+      url: "https://source.unsplash.com/400x400/?coffee-cupping-tasting-session-professional-roaster",
+      alt: "Coffee cupping session with expert guidance"
+    },
+    {
+      url: "https://source.unsplash.com/400x500/?book-club-meeting-coffee-shop-community-discussion",
+      alt: "Book club members discussing over coffee"
+    },
+    {
+      url: "https://source.unsplash.com/400x450/?live-music-audience-coffee-shop-evening-atmosphere",
+      alt: "Engaged audience enjoying live music"
+    },
+    {
+      url: "https://source.unsplash.com/400x550/?community-gathering-coffee-shop-diverse-people-socializing",
+      alt: "Community members connecting over coffee"
+    },
+    {
+      url: "https://source.unsplash.com/400x480/?coffee-education-workshop-beans-tasting-notes",
+      alt: "Coffee education workshop in progress"
+    }
+  ];
+
   return (
-    <main className="min-h-screen bg-var(--color-bg)">
+    <>
       <style jsx>{`
-        .coffee-bean-pattern {
-          background-image: radial-gradient(circle at 20% 20%, rgba(101, 67, 33, 0.1) 2px, transparent 2px),
-                           radial-gradient(circle at 80% 40%, rgba(101, 67, 33, 0.08) 3px, transparent 3px),
-                           radial-gradient(circle at 40% 80%, rgba(101, 67, 33, 0.06) 2px, transparent 2px);
-          background-size: 60px 60px, 80px 80px, 100px 100px;
+        .coffee-beans-scatter::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: radial-gradient(circle at 20% 30%, var(--color-accent) 2px, transparent 2px),
+                          radial-gradient(circle at 70% 20%, var(--color-secondary) 2px, transparent 2px),
+                          radial-gradient(circle at 40% 80%, var(--color-accent) 1px, transparent 1px),
+                          radial-gradient(circle at 80% 70%, var(--color-secondary) 1px, transparent 1px);
+          background-size: 150px 150px, 200px 200px, 120px 120px, 180px 180px;
+          opacity: 0.1;
+          pointer-events: none;
         }
-        .desert-gradient-hover {
-          transition: background 0.3s ease-out;
+        
+        .steam-hover:hover::after {
+          content: '';
+          position: absolute;
+          top: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 2px;
+          height: 20px;
+          background: linear-gradient(transparent, var(--color-muted), transparent);
+          animation: steam 2s ease-in-out infinite;
         }
-        .desert-gradient-hover:hover {
-          background: linear-gradient(135deg, #654321 0%, #D4761A 100%);
+        
+        @keyframes steam {
+          0% { transform: translateX(-50%) translateY(0) scaleY(1); opacity: 0; }
+          50% { transform: translateX(-50%) translateY(-5px) scaleY(1.2); opacity: 0.7; }
+          100% { transform: translateX(-50%) translateY(-15px) scaleY(0.8); opacity: 0; }
         }
       `}</style>
 
-      {/* Hero Section */}
-      <section id="hero" className="relative min-h-screen grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
-        <div className="flex items-center px-8 lg:px-16 py-24 coffee-bean-pattern">
-          <div className="max-w-lg">
-            <FadeInUp delay={0}>
-              <span className="text-sm font-semibold uppercase tracking-widest text-amber-600 mb-4 block">Community Hub</span>
-            </FadeInUp>
-            <FadeInUp delay={100}>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-gray-900">More Than Coffee</h1>
-            </FadeInUp>
-            <FadeInUp delay={200}>
-              <p className="text-lg text-gray-600 mb-8">Join us for community events, live music, and coffee education</p>
-            </FadeInUp>
-            <FadeInUp delay={300}>
-              <div className="flex gap-4">
-                <a href="#event-listing" className="px-8 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition">
-                  View Events
-                </a>
-                <a href="/contact" className="px-8 py-3 border-2 border-amber-600 text-amber-600 rounded-lg font-medium hover:bg-amber-600 hover:text-white transition">
-                  Contact Us
-                </a>
-              </div>
-            </FadeInUp>
-          </div>
-        </div>
-        <div className="relative min-h-[400px] lg:min-h-screen">
+      <main>
+        {/* Hero Section */}
+        <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden coffee-beans-scatter">
           <img 
-            src="https://source.unsplash.com/800x1000/?coffee-cupping-tasting-professional-cafe-setup" 
-            alt="Coffee events" 
+            src="https://source.unsplash.com/1920x1080/?artisanal-coffee-shop-interior-warm-lighting-Scottsdale-Arizona" 
+            alt="" 
             className="absolute inset-0 w-full h-full object-cover" 
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
-        </div>
-      </section>
-
-      {/* Event Listing Section */}
-      <section id="event-listing" className="py-24 px-6">
-        <div className="max-w-5xl mx-auto">
-          <FadeInUp delay={0}>
-            <h2 className="text-4xl font-bold mb-16 text-center text-gray-900">Upcoming Events</h2>
-          </FadeInUp>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
+          <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
+            <FadeInUp delay={0}>
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight" style={{fontFamily: 'var(--font-heading)'}}>
+                Where Community Comes Together
+              </h1>
+            </FadeInUp>
             <FadeInUp delay={100}>
-              <ShineBorder borderRadius={16} borderWidth={2} duration={3} color={["#D4761A", "#654321", "#F59E0B"]}>
-                <div className="p-8 bg-white rounded-2xl desert-gradient-hover hover:text-white transition-colors duration-300">
-                  <div className="text-center mb-6">
-                    <div className="text-sm font-semibold text-amber-600 uppercase mb-2">SAT</div>
-                    <div className="text-4xl font-black text-gray-900">10</div>
-                    <div className="text-sm text-gray-600">AM</div>
-                  </div>
-                  <h3 className="text-lg font-semibold mb-3">Saturday Morning Coffee Cupping</h3>
-                  <p className="text-sm text-gray-600 mb-4">Every Saturday 10 AM</p>
-                  <p className="text-sm">Learn to taste coffee like a pro with guided cupping sessions</p>
-                </div>
-              </ShineBorder>
+              <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Join us for live music, coffee education, and neighborhood connections
+              </p>
             </FadeInUp>
-            
             <FadeInUp delay={200}>
-              <div className="p-8 bg-white rounded-2xl border border-gray-200 desert-gradient-hover hover:text-white transition-colors duration-300">
-                <div className="text-center mb-6">
-                  <div className="text-sm font-semibold text-amber-600 uppercase mb-2">FRI</div>
-                  <div className="text-4xl font-black text-gray-900">1st</div>
-                  <div className="text-sm text-gray-600">Monthly</div>
-                </div>
-                <h3 className="text-lg font-semibold mb-3">Local Artist Showcase</h3>
-                <p className="text-sm text-gray-600 mb-4">First Friday Monthly</p>
-                <p className="text-sm">Featuring rotating Scottsdale artists with live music and art displays</p>
-              </div>
-            </FadeInUp>
-            
-            <FadeInUp delay={300}>
-              <div className="p-8 bg-white rounded-2xl border border-gray-200 desert-gradient-hover hover:text-white transition-colors duration-300">
-                <div className="text-center mb-6">
-                  <div className="text-sm font-semibold text-amber-600 uppercase mb-2">WORKSHOP</div>
-                  <div className="text-4xl font-black text-gray-900">•</div>
-                  <div className="text-sm text-gray-600">Monthly</div>
-                </div>
-                <h3 className="text-lg font-semibold mb-3">Latte Art Workshop</h3>
-                <p className="text-sm text-gray-600 mb-4">Monthly Workshop</p>
-                <p className="text-sm">Hands-on class to master the art of milk steaming and pouring</p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a 
+                  href="#events" 
+                  className="px-8 py-4 bg-white text-black font-semibold rounded-full text-lg hover:bg-white/90 transition-all duration-300 steam-hover relative"
+                >
+                  View Calendar
+                </a>
+                <a 
+                  href="#contact" 
+                  className="px-8 py-4 border-2 border-white text-white font-semibold rounded-full text-lg hover:bg-white hover:text-black transition-all duration-300"
+                >
+                  Host an Event
+                </a>
               </div>
             </FadeInUp>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Gallery Section */}
-      <section id="gallery" className="py-24 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <FadeInUp delay={0}>
-            <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">Community in Action</h2>
-          </FadeInUp>
-          <FadeInUp delay={100}>
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-              <div className="break-inside-avoid rounded-xl overflow-hidden">
-                <img 
-                  src="https://source.unsplash.com/400x300/?artisanal-coffee-shop-interior-warm-lighting-scottsdale" 
-                  alt="Coffee shop interior" 
-                  className="w-full hover:scale-105 transition duration-500" 
-                />
-              </div>
-              <div className="break-inside-avoid rounded-xl overflow-hidden">
-                <img 
-                  src="https://source.unsplash.com/400x500/?specialty-coffee-beans-roasting-desert-modern-cafe" 
-                  alt="Coffee beans" 
-                  className="w-full hover:scale-105 transition duration-500" 
-                />
-              </div>
-              <div className="break-inside-avoid rounded-xl overflow-hidden">
-                <img 
-                  src="https://source.unsplash.com/400x400/?barista-pouring-latte-art-sunny-coffee-shop" 
-                  alt="Latte art" 
-                  className="w-full hover:scale-105 transition duration-500" 
-                />
-              </div>
-              <div className="break-inside-avoid rounded-xl overflow-hidden">
-                <img 
-                  src="https://source.unsplash.com/400x350/?cozy-coffee-shop-community-gathering-arizona-desert" 
-                  alt="Community gathering" 
-                  className="w-full hover:scale-105 transition duration-500" 
-                />
-              </div>
-              <div className="break-inside-avoid rounded-xl overflow-hidden">
-                <img 
-                  src="https://source.unsplash.com/400x450/?coffee-cupping-tasting-professional-cafe-setup" 
-                  alt="Coffee cupping" 
-                  className="w-full hover:scale-105 transition duration-500" 
-                />
-              </div>
-              <div className="break-inside-avoid rounded-xl overflow-hidden">
-                <img 
-                  src="https://source.unsplash.com/400x300/?desert-landscape-sunset-warm-tones-arizona-scottsdale" 
-                  alt="Desert landscape" 
-                  className="w-full hover:scale-105 transition duration-500" 
-                />
-              </div>
+        {/* Event Listing Section */}
+        <section id="events" className="py-24 px-6 bg-var(--color-bg)">
+          <div className="max-w-5xl mx-auto">
+            <FadeInUp delay={0}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center" style={{fontFamily: 'var(--font-heading)', color: 'var(--color-text)'}}>
+                Upcoming Events
+              </h2>
+            </FadeInUp>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {events.map((event, index) => (
+                <FadeInUp key={event.title} delay={index * 100}>
+                  <div className="bg-var(--color-surface) p-8 rounded-2xl border border-var(--color-muted)/20 hover:shadow-lg transition-all duration-300 group steam-hover relative">
+                    <div className="text-center mb-6">
+                      <div className="text-sm font-semibold uppercase tracking-wide mb-2" style={{color: 'var(--color-primary)'}}>
+                        {event.month}
+                      </div>
+                      <div className="text-4xl font-black" style={{color: 'var(--color-text)'}}>
+                        {event.day}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-3 group-hover:text-var(--color-primary) transition-colors" style={{color: 'var(--color-text)'}}>
+                        {event.title}
+                      </h3>
+                      <p className="text-sm font-medium mb-2" style={{color: 'var(--color-secondary)'}}>
+                        {event.date}
+                      </p>
+                      <p className="text-var(--color-muted) leading-relaxed">
+                        {event.description}
+                      </p>
+                    </div>
+                  </div>
+                </FadeInUp>
+              ))}
             </div>
-          </FadeInUp>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* Atmosphere Band */}
-      <section id="atmosphere" className="relative h-[60vh] flex items-center justify-center overflow-hidden">
-        <img 
-          src="https://source.unsplash.com/1400x800/?cozy-coffee-shop-community-gathering-arizona-desert" 
-          alt="Community atmosphere" 
-          className="absolute inset-0 w-full h-full object-cover" 
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60" />
-        <div className="relative text-center text-white px-6 coffee-bean-pattern">
-          <FadeInUp delay={0}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Where Community Brews</h2>
-          </FadeInUp>
-          <FadeInUp delay={100}>
-            <p className="text-xl text-white/80">Every cup tells a story, every event builds connection</p>
-          </FadeInUp>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section id="cta" className="py-24 px-6 bg-amber-600 text-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <FadeInUp delay={0}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Join Our Next Event</h2>
-          </FadeInUp>
-          <FadeInUp delay={100}>
-            <p className="text-xl opacity-90 mb-10">Be part of Scottsdale's most vibrant coffee community</p>
-          </FadeInUp>
-          <FadeInUp delay={200}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/contact" className="inline-block px-10 py-4 bg-white text-amber-600 font-bold rounded-full text-lg hover:bg-gray-100 transition">
-                Get Event Updates
-              </a>
-              <a href="/menu" className="inline-block px-10 py-4 border-2 border-white text-white font-bold rounded-full text-lg hover:bg-white hover:text-amber-600 transition">
-                View Our Menu
-              </a>
+        {/* Gallery Section */}
+        <section id="gallery" className="py-24 px-6" style={{backgroundColor: 'var(--color-surface)'}}>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <FadeInUp delay={0}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{fontFamily: 'var(--font-heading)', color: 'var(--color-text)'}}>
+                  Event Memories
+                </h2>
+              </FadeInUp>
+              <FadeInUp delay={100}>
+                <p className="text-lg" style={{color: 'var(--color-muted)'}}>
+                  Moments from our vibrant community gatherings
+                </p>
+              </FadeInUp>
             </div>
-          </FadeInUp>
-        </div>
-      </section>
-    </main>
-  )
+            
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+              {galleryImages.map((img, index) => (
+                <FadeInUp key={index} delay={index * 50}>
+                  <div className="break-inside-avoid rounded-2xl overflow-hidden group cursor-pointer">
+                    <img 
+                      src={img.url} 
+                      alt={img.alt} 
+                      className="w-full hover:scale-105 transition-transform duration-500 group-hover:brightness-110" 
+                    />
+                  </div>
+                </FadeInUp>
+              ))}
+            </div>
+
+            <FadeInUp delay={200}>
+              <div className="text-center mt-16">
+                <a 
+                  href="#contact" 
+                  className="inline-block px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 steam-hover relative"
+                  style={{
+                    backgroundColor: 'var(--color-primary)',
+                    color: 'var(--color-bg)'
+                  }}
+                >
+                  Join Our Next Event
+                </a>
+              </div>
+            </FadeInUp>
+          </div>
+        </section>
+
+        {/* Atmosphere Break */}
+        <section className="relative h-[60vh] flex items-center justify-center coffee-beans-scatter">
+          <img 
+            src="https://source.unsplash.com/1920x800/?cozy-coffee-shop-customers-laptops-community-atmosphere" 
+            alt="" 
+            className="absolute inset-0 w-full h-full object-cover" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30" />
+          <div className="relative text-center text-white px-6">
+            <FadeInUp delay={0}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{fontFamily: 'var(--font-heading)'}}>
+                Every Gathering Tells a Story
+              </h2>
+            </FadeInUp>
+            <FadeInUp delay={100}>
+              <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
+                From intimate acoustic sets to educational coffee sessions, Bean & Brew is where Scottsdale comes together
+              </p>
+            </FadeInUp>
+          </div>
+        </section>
+
+        {/* Contact CTA */}
+        <section id="contact" className="py-24 px-6" style={{backgroundColor: 'var(--color-primary)'}}>
+          <div className="max-w-3xl mx-auto text-center">
+            <FadeInUp delay={0}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{fontFamily: 'var(--font-heading)', color: 'var(--color-bg)'}}>
+                Ready to Host Your Event?
+              </h2>
+            </FadeInUp>
+            <FadeInUp delay={100}>
+              <p className="text-xl mb-10" style={{color: 'var(--color-bg)', opacity: 0.8}}>
+                Let's create something memorable together in our welcoming space
+              </p>
+            </FadeInUp>
+            <FadeInUp delay={200}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a 
+                  href="/contact" 
+                  className="inline-block px-10 py-4 font-bold rounded-full text-lg transition-all duration-300 steam-hover relative"
+                  style={{
+                    backgroundColor: 'var(--color-bg)',
+                    color: 'var(--color-primary)'
+                  }}
+                >
+                  Get in Touch
+                </a>
+                <a 
+                  href="tel:(480) 555-BREW" 
+                  className="inline-block px-10 py-4 border-2 font-bold rounded-full text-lg transition-all duration-300"
+                  style={{
+                    borderColor: 'var(--color-bg)',
+                    color: 'var(--color-bg)'
+                  }}
+                >
+                  Call Us
+                </a>
+              </div>
+            </FadeInUp>
+          </div>
+        </section>
+      </main>
+    </>
+  );
 }
