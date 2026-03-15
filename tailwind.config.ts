@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
@@ -10,19 +10,17 @@ const config: Config = {
     extend: {
       colors: {
         primary: '#8B4513',
-        secondary: '#D2B48C',
-        accent: '#E67E22',
-        surface: '#FFFFFF',
-        background: '#FFF8F0',
-        foreground: '#2C1810',
+        secondary: '#D2691E',
+        accent: '#CD853F',
+        surface: '#F5F5DC'
       },
       fontFamily: {
-        heading: ['Cormorant Garamond', 'serif'],
-        body: ['Source Sans 3', 'sans-serif'],
-      },
+        'heading': ['Cormorant Garamond', 'serif'],
+        'body': ['Source Sans 3', 'sans-serif']
+      }
     },
   },
   plugins: [],
-};
+}
 
-export default config;
+export default config
